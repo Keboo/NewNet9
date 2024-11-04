@@ -2,15 +2,15 @@
 
 string input = "This is a sample sentence, with punctuation.";
 
-string[] words = MyRegex.WordSplitter().Split(input);
+var words = MyRegex.WordSplitter.EnumerateSplits(input);
 
-foreach (string word in words)
+foreach (Range range in words)
 {
-    Console.WriteLine(word);
+    Console.WriteLine(input[range]);
 }
 
 public partial class MyRegex
 {
     [GeneratedRegex(@"\W+")]
-    public static partial Regex WordSplitter();
+    public static partial Regex WordSplitter { get; }
 }
