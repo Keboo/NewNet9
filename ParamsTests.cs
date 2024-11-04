@@ -13,7 +13,7 @@ public class ParamsTests
     public void CanJoinStringsFromList()
     {
         var strings = GetStrings();
-        Assert.Equal("Hello World", Join(strings.ToArray()));
+        Assert.Equal("Hello World", Join(strings));
     }
 
     private static List<string> GetStrings()
@@ -21,7 +21,12 @@ public class ParamsTests
         return ["Hello", "World"];
     }
 
-    private static string Join(params string[] strings)
+    private static string Join(params IEnumerable<string> strings)
+    {
+        return string.Join(" ", strings);
+    }
+
+    private static string Join(params ReadOnlySpan<string?> strings)
     {
         return string.Join(" ", strings);
     }
