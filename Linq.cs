@@ -6,16 +6,16 @@ public class LinqTests
     public void JNames()
     {
         var people = GetPeople();
-        var jGroup = people.GroupBy(p => p.Name[0]).First();
-        Assert.Equal(10, jGroup.Count());
+        var (_, count) = people.CountBy(p => p.Name[0]).First();
+        Assert.Equal(10, count);
     }
 
     [Fact]
     public void Ages()
     {
         var people = GetPeople();
-        var ages = people.GroupBy(p => p.Name[0]).Select(g => g.Select(p => p.Age).Sum());
-        Assert.Equal([375, 21], ages.ToList());
+        var ages = people.AggregateBy(p => p.Name[0], 0, (sum, p) => sum + p.Age);
+        Assert.Equal([375, 21], [..ages.Select(x => x.Value)]);
     }
 
     private static List<Person> GetPeople()
